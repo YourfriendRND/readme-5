@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "types": ["node"]
+  },
+  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "include": ["src/**/*.ts", "src/lib/auth-user.interface.ts", "src/lib/comment.interface.ts", "src/lib/link-post.interface.ts", "src/lib/photo-post.interface.ts", "src/lib/post.interface.ts", "src/lib/quote-post.interface.ts", "src/lib/tag.interface.ts", "src/lib/text-post.interface.ts", "src/lib/user.interface.ts", "src/lib/video-post.interface.ts"]
+}

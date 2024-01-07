@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@project/constants": ["constants/src/index.ts"],
+      "@project/shared/constants": ["shared/constants/src/index.ts"],
+      "@project/shared/core": ["shared/core/src/index.ts"],
+      "@project/shared/helpers": ["shared/helpers/src/index.ts"],
+      "@project/shared/types": ["shared/types/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
