@@ -4,10 +4,12 @@ export const DEFAULT_APPLICATION_PORT = 3000;
 
 export const DEFAULT_MONGO_DB_PORT = 27017;
 
-export const APPLICATION_ENVAIRONMENTS = [
+export const APPLICATION_ENVIRONMENTS = [
     'development',
     'production',
     'stage'
 ] as const;
 
-export type Envaironment = typeof APPLICATION_ENVAIRONMENTS[number];
+export type Environment = typeof APPLICATION_ENVIRONMENTS[number];
+
+export const SERVE_ROOT = '/static';

@@ -3,9 +3,9 @@ import { CommentInterface } from '@project/shared/types';
 
 export class CommentEntity implements CommentInterface, Entity<string> {
   public id?: string;
+  public postId?: string;
   public authorId: string;
   public text: string;
-  public postId: string;
 
   constructor(comment: CommentInterface) {
     this.populate(comment);
@@ -14,8 +14,8 @@ export class CommentEntity implements CommentInterface, Entity<string> {
   public populate(comment: CommentInterface): void {
     this.id = comment.id,
     this.authorId = comment.authorId;
-    this.postId = comment.postId;
     this.text = comment.text;
+    this.postId = comment.postId;
   }
 
   public toPOJO() {

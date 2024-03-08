@@ -33,6 +33,7 @@ model Post {
   photo         String?
   text          String?
   quoteAuthorId String?  @map("quote_author_id")
+  quotedText    String?  @map("quoted_text")
   announcement  String?
   videoUrl      String?  @map("video_url")
   createdAt     DateTime @default(now()) @map("created_at")

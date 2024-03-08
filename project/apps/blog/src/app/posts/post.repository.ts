@@ -3,6 +3,7 @@ import { PostEntity } from './post.abstract';
 import { BasePrismaRepository } from '@project/shared/core';
 import { PrismaClientService } from '@project/shared/config/blog';
 import { PostInterface } from '@project/shared/types';
+import { MAX_LIMIT_POST_ON_PAGE } from './post.constant';
 
 @Injectable()
 export class PostRepository extends BasePrismaRepository<PostEntity, PostInterface> {
@@ -61,13 +62,16 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
       return entity;
     }
 
-    public async find(authorId: string, limit: number): Promise<PostEntity[]> {
+    public async find(authorId: string, limit: number, page: number): Promise<PostEntity[]> {
+      const count = limit && limit <= MAX_LIMIT_POST_ON_PAGE ? limit : MAX_LIMIT_POST_ON_PAGE;
+      const skipCount = page && page > 1 ? page * count : 0;
       const documents = await this.client.post.findMany({
         where: { authorId: authorId },
         include: {
           tags: true,
         },
-        take: limit
+        take: count,
+        skip: skipCount
       })
 
       return documents.map((document) => this.createEntityFromDocument(document));

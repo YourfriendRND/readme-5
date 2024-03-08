@@ -3,7 +3,6 @@ import { PostRepository } from './post.repository';
 import { PostEntity } from './post.abstract';
 import { PostDTO } from './dto/post.dto';
 import { PostTypes } from '@project/shared/types';
-import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 import { TextPostEntity } from './entities/text-post.entity';
 import { VideoPostEntity } from './entities/video-post.entity';
 import { PhotoPostEntity } from './entities/photo-post.entity';
@@ -93,9 +92,8 @@ export class PostService {
 
     }
 
-    public async find(authorId: string, limit?: string): Promise<PostEntity[]> {
-        const postCount = Number(limit) ? Number(limit) : DEFAULT_LIMIT_ENTITIES;
-        const posts = await this.postRepository.find(authorId, postCount);
+    public async find(authorId: string, limit: number, page: number): Promise<PostEntity[]> {
+        const posts = await this.postRepository.find(authorId, limit, page);
         return posts;
     }
 
