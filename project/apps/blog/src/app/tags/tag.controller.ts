@@ -33,7 +33,7 @@ export class TagController {
   })
   @Get()
   public async index(
-    @Query('limit') limit?: string,
+    @Query('limit') limit?: number,
   ): Promise<TagRDO[]> {
     const tags = await this.tagService.find(limit);
     const plainTags = tags.map((tag) => fillDTO(TagRDO, tag.toPOJO()));

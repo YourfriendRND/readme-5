@@ -3,6 +3,7 @@ import { PrismaClientService } from '@project/shared/config/blog';
 import { BasePrismaRepository } from '@project/shared/core';
 import { TagInterface } from '@project/shared/types';
 import { TagEntity } from './tag.entity';
+import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 
 @Injectable()
 export class TagRepository extends BasePrismaRepository<TagEntity, TagInterface> {
@@ -50,7 +51,7 @@ export class TagRepository extends BasePrismaRepository<TagEntity, TagInterface>
 
   public async find(limit: number): Promise<TagEntity[]> {
     const documents = await this.client.tag.findMany({
-      take: limit
+      take: limit ? limit : DEFAULT_LIMIT_ENTITIES,
     });
 
     return documents.map((doc) => this.createEntityFromDocument(doc));

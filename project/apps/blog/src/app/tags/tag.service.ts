@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTagDTO } from './dto/create-tag.dto';
 import { TagEntity } from './tag.entity';
 import { TagRepository } from './tag.repository';
-import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 
 @Injectable()
 export class TagService {
@@ -11,9 +10,8 @@ export class TagService {
     private readonly tagRepository: TagRepository,
   ) {}
 
-  public async find (limit: string): Promise<TagEntity[]> {
-    const tagCount = Number(limit) ? Number(limit) : DEFAULT_LIMIT_ENTITIES;
-    return await this.tagRepository.find(tagCount);
+  public async find (limit: number): Promise<TagEntity[]> {
+    return await this.tagRepository.find(limit);
   }
 
   public async createTag (dto: CreateTagDTO): Promise<TagEntity> {

@@ -10,3 +10,7 @@ export * from './lib/tag.interface';
 export * from './lib/comment.interface';
 export * from './lib/post.type';
 export * from './lib/mongodb.type';
+export * from './lib/token-payload.interface';
+export * from './lib/token.interface';
+export * from './lib/stored-file.interface';
+export * from './lib/file.interface';

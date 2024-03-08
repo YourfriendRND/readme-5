@@ -1,4 +1,6 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException, Logger, HttpException, HttpStatus } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { TokenPayload, Token, UserInterface } from '@project/shared/types';
 import { UserRepository } from '../user/user.repository';
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UserEntity } from '../user/user.entity';
@@ -11,7 +13,12 @@ import {
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private readonly userRepository: UserRepository) {}
+  private readonly logger = new Logger(AuthenticationService.name);
+
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService,
+  ) {}
 
   public async register({email, password, firstName, lastName}: CreateUserDTO): Promise<UserEntity> {
     const existUser = await this.userRepository.findByEmail(email);
@@ -62,4 +69,22 @@ export class AuthenticationService {
     return user;
   }
 
+  public async createUserToken(user: UserInterface): Promise<Token> {
+    try {
+      const payload: TokenPayload = {
+        sub: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      }
+  
+      const accessToken = await this.jwtService.signAsync(payload);
+      return { accessToken };
+    } catch (err) {
+      this.logger.error(`[Token generate error]: ${err.message}`);
+      throw new HttpException(`Error while token creation`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
 }
+
+

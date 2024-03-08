@@ -7,7 +7,7 @@ import { CommentDTO } from './dto/comment.dto';
 import { CommentRDO } from './rdo/comment.rdo';
 
 @ApiTags('blog-comments')
-@Controller('comments')
+@Controller('posts/:postId/comments')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
@@ -16,11 +16,12 @@ export class CommentController {
     status: HttpStatus.CREATED,
     description: 'The new comment has been successfully created'
   })
-  @Post()
+  @Post('/')
   public async create(
+    @Param('postId') postId: string,
     @Body() dto: CommentDTO
   ): Promise<CommentRDO> {
-    const createdComment = await this.commentService.createComment(dto);
+    const createdComment = await this.commentService.createComment(postId, dto);
     return fillDTO(CommentRDO, createdComment.toPOJO());
   }
 
@@ -47,12 +48,13 @@ export class CommentController {
     required: true,
     description: 'Uniq ID a post with comments',
   })
-  @Get(':id')
+  @Get('/')
   public async index(
-    @Param('id') id: string,
-    @Query() limit?: string,
+    @Param('postId') postId: string,
+    @Query('limit') limit?: number,
+    @Query('page') page?: number,
   ): Promise<CommentRDO[]> {
-    const comments = await this.commentService.findComments(id, limit);
+    const comments = await this.commentService.findComments(postId, limit, page);
     const plainComments = comments.map((comment) => fillDTO(CommentRDO, comment.toPOJO()));
     return plainComments;
   }
@@ -66,12 +68,12 @@ export class CommentController {
     required: true,
     description: 'Uniq id of deleted comment'
   })
-  @Delete(':id')
+  @Delete('/')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(
-    @Param('id') id: string
+    @Param('postId') postId: string
   ): Promise<void> {
-    await this.commentService.deleteComment(id);
+    await this.commentService.deleteComment(postId);
   }
 
 }

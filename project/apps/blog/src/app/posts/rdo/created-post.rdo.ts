@@ -76,10 +76,17 @@ export class PostRDO {
 
     @ApiProperty({
       description: 'Unique ID of the quoted author, requiered for post with type: quote',
-      example: 'c04fcf4b-400c-4f45-8318-e6e692266f55',
+      example: '659ac76f8fcee5cc6bd9dee3',
     })
     @Expose()
     public quoteAuthorId: string;
+
+    @ApiProperty({
+      description: 'Quote text',
+      example: 'Example of quoted text'
+    })
+    @Expose()
+    public quotedText: string;
 
     @ApiProperty({
       description: 'URL for video content, requiered for post with type: video',
@@ -94,4 +101,11 @@ export class PostRDO {
     })
     @Expose()
     public type: PostTypes.Link | PostTypes.Photo | PostTypes.Quote | PostTypes.Text | PostTypes.Video;
+
+    @ApiProperty({
+      description: 'The uniq ID of posts author',
+      example: '659ac76f8fcee5cc6bd9dee3'
+    })
+    @Expose()
+    public authorId: string;
 }

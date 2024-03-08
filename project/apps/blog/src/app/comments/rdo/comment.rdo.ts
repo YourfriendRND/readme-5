@@ -25,7 +25,7 @@ export class CommentRDO {
 
   @ApiProperty({
     description: 'Uniq ID of comment author',
-    example: '97cbdc0a-2f8c-475e-9dae-4ff9c4c431c4',
+    example: '659ac76f8fcee5cc6bd9dee3',
   })
   @Expose()
   public authorId: string;

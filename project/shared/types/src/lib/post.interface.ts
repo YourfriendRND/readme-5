@@ -12,6 +12,7 @@ export interface PostInterface {
   text?: string;
   url?: string;
   quoteAuthorId?: string;
+  quotedText?: string;
   photo?: string;
   videoUrl?: string;
 }

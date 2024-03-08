@@ -5,7 +5,7 @@ export class UserRDO {
 
   @ApiProperty({
     description: 'The uniq user ID',
-    example: '42'
+    example: '659ac76f8fcee5cc6bd9dee3'
   })
   @Expose()
   public id: string;

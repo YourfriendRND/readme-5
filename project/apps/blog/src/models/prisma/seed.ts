@@ -75,8 +75,9 @@ const mockPosts = mockUsersId.map((id, idx) => {
         comments: mockComments.slice(0, randomNumber),
         url: type === PostTypes.Link ? 'http://www.sample.com/?education=orange&reaction=detail' : undefined,
         photo: type === PostTypes.Photo ? 'https://pics4.city-data.com/cpicc/cfiles34653.jpg' : undefined,
-        text: type === PostTypes.Text || type === PostTypes.Quote ? 'Simple text' : undefined,
+        text: type === PostTypes.Text ? 'Simple text' : undefined,
         quoteAuthorId: type === PostTypes.Quote ? anotherAuthorId : undefined,
+        quotedText: type === PostTypes.Quote ? 'Quote text example' : undefined,
         announcement: type === PostTypes.Text ? 'Another text' : undefined,
         videoUrl: type === PostTypes.Video ? 'http://sample.edu/hobbies.html' : undefined,
     }
@@ -118,6 +119,7 @@ async function seedDb(prismaClient: PrismaClient): Promise<void> {
                 photo: post.photo,
                 text: post.text,
                 quoteAuthorId: post.quoteAuthorId,
+                quotedText: post.quotedText,
                 announcement: post.announcement,
                 videoUrl: post.videoUrl,
                 comments: post.comments.length ? {

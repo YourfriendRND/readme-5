@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Patch, Get, Delete, Param, Query, HttpStatus, HttpCode } from '@nestjs/common';
+import { Controller, Body, Post, Patch, Get, Delete, Param, Query, HttpStatus, HttpCode, NotFoundException } from '@nestjs/common';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
 import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 import { fillDTO } from '@project/shared/helpers';
@@ -93,9 +93,14 @@ export class PostController {
     @Get()
     public async index(
         @Query('authorId') authorId?: string, // Временное решение, пока нет аутентификации, после буду  брать данные из токена
-        @Query('limit') limit?: string,
+        @Query('limit') limit?: number,
+        @Query('page') page?: number
     ): Promise<PostRDO[]> {
-        const posts = await this.postService.find(authorId, limit);
+        if (!authorId) {
+            throw new NotFoundException('The author of the posts is unknown')
+        }
+        
+        const posts = await this.postService.find(authorId, limit, page);
         const plainPosts = posts.map((post) => fillDTO(PostRDO, post.toPOJO()));
         return plainPosts;
     }

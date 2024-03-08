@@ -22,10 +22,9 @@ export abstract class BasePrismaRepository<
 
   abstract findById(id: EntityType['id']): Promise<EntityType>
 
-  abstract save(entity: EntityType): Promise<EntityType>
+  abstract save(entity: EntityType, ...args: unknown[]): Promise<EntityType>
 
   abstract update(id: EntityType['id'], entity: EntityType): Promise<EntityType>
 
   abstract deleteById(id: EntityType['id']): Promise<void>
 }
-

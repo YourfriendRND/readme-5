@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import * as Joi from 'joi';
-import { APPLICATION_ENVAIRONMENTS, DEFAULT_APPLICATION_PORT, Envaironment } from '@project/shared/constants';
+import { APPLICATION_ENVIRONMENTS, DEFAULT_APPLICATION_PORT, Environment } from '@project/shared/constants';
 
 export interface ApplicationConfigInterface {
     port: number;
@@ -9,7 +9,7 @@ export interface ApplicationConfigInterface {
 
 const validationSchema = Joi.object({
     port: Joi.number().port().default(DEFAULT_APPLICATION_PORT),
-    envaironment: Joi.string().valid(...APPLICATION_ENVAIRONMENTS).required()
+    envaironment: Joi.string().valid(...APPLICATION_ENVIRONMENTS).required()
 })
 
 function validateConfig(config: ApplicationConfigInterface): void {
@@ -23,7 +23,7 @@ function validateConfig(config: ApplicationConfigInterface): void {
 function getConfig(): ApplicationConfigInterface {
     const config = {
         port: parseInt(process.env['PORT']!, 10),
-        envaironment: process.env['NODE_ENV'] as Envaironment,
+        envaironment: process.env['NODE_ENV'] as Environment,
     }
 
     validateConfig(config);

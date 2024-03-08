@@ -3,6 +3,7 @@ import { CommentEntity } from './comment.entity';
 import { PrismaClientService } from '@project/shared/config/blog';
 import { BasePrismaRepository } from '@project/shared/core';
 import { CommentInterface } from '@project/shared/types';
+import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 
 @Injectable()
 export class CommentRepository extends BasePrismaRepository<CommentEntity, CommentInterface> {
@@ -39,12 +40,12 @@ export class CommentRepository extends BasePrismaRepository<CommentEntity, Comme
     });
   }
 
-  public async save(entity: CommentEntity): Promise<CommentEntity> {
+  public async save(entity: CommentEntity, postId: string): Promise<CommentEntity> {
     const createdComment = await this.client.comment.create({
       data: {
         text: entity.text,
         post: {
-          connect: { id: entity.postId }
+          connect: { id: postId }
         },
         author: {
           connect: { id: entity.authorId }
@@ -55,13 +56,16 @@ export class CommentRepository extends BasePrismaRepository<CommentEntity, Comme
     return this.createEntityFromDocument(createdComment);
   }
 
-  public async find(postId: string, limit: number): Promise<CommentEntity[]> {
+  public async find(postId: string, limit: number, page: number): Promise<CommentEntity[]> {
+    const count = limit && limit <= DEFAULT_LIMIT_ENTITIES ? limit : DEFAULT_LIMIT_ENTITIES;
+    const skipCount = page && page > 1 ? page * count : 0;
     const posts = await this.client.comment.findMany({
       where: { postId: postId },
       include: {
         author: true
       },
-      take: limit
+      take: count,
+      skip: skipCount,
     });
 
     return posts.map((post) => this.createEntityFromDocument(post));

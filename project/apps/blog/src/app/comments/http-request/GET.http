@@ -1,2 +1,2 @@
-GET http://localhost:3000/api/tags HTTP/1.1
+GET http://localhost:3000/api/comments/5375fd40-9d6d-44b2-bd87-5a350475be95 HTTP/1.1
 content-type: application/json

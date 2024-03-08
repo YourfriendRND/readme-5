@@ -13,6 +13,7 @@ export class PostEntity implements PostInterface, Entity<string> {
     public text?: string;
     public url?: string;
     public quoteAuthorId?: string;
+    public quotedText?: string;
     public photo?: string;
     public videoUrl?: string;
 
@@ -32,6 +33,7 @@ export class PostEntity implements PostInterface, Entity<string> {
         this.text = post.text;
         this.url = post.url;
         this.quoteAuthorId = post.quoteAuthorId;
+        this.quotedText = post.quotedText;
         this.photo = post.photo;
         this.videoUrl = post.videoUrl;
     }
@@ -49,6 +51,7 @@ export class PostEntity implements PostInterface, Entity<string> {
             text: this.text  !== null ? this.text : undefined,
             url: this.url !== null ? this.url : undefined,
             quoteAuthorId: this.quoteAuthorId !== null ? this.quoteAuthorId : undefined,
+            quotedText: this.quotedText !== null ? this.quotedText : undefined,
             photo: this.photo !== null ? this.photo : undefined,
             videoUrl: this.videoUrl !== null ? this.videoUrl : undefined,
         }

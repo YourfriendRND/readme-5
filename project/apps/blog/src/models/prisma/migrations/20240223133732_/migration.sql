@@ -17,6 +17,7 @@ CREATE TABLE "posts" (
     "photo" TEXT,
     "text" TEXT,
     "quote_author_id" TEXT,
+    "quoted_text" TEXT,
     "announcement" TEXT,
     "video_url" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

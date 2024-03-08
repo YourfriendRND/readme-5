@@ -1,0 +1,27 @@
+POST http://localhost:3002/api/auth/register HTTP/1.1
+content-type: application/json
+
+{
+   "firstName": "Игорь",
+   "lastName": "Рыбкин",
+   "email": "mechta@yandex.ru",
+   "password": "qwe123!"
+}
+
+#### 
+GET http://localhost:3002/api/auth/65d8eb73ab733b50fa262db7 HTTP/1.1
+content-type: application/json
+
+####
+POST http://localhost:3002/api/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "mechta@yandex.ru",
+    "password": "qwe123!"
+}
+
+####
+GET http://localhost:3002/api/auth/65d8eb73ab733b50fa262db7 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQ4ZWI3M2FiNzMzYjUwZmEyNjJkYjciLCJlbWFpbCI6Im1lY2h0YUB5YW5kZXgucnUiLCJmaXJzdE5hbWUiOiLQmNCz0L7RgNGMIiwibGFzdE5hbWUiOiLQoNGL0LHQutC40L0iLCJpYXQiOjE3MDkyNjQ0MzUsImV4cCI6MTcwOTMwMDQzNX0.nJ-GV7vgXeqvz41JE6-9u-cehIekrfAfcsk7SqaDOwk
