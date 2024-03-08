@@ -62,7 +62,7 @@ export class PostDTO {
       description: 'Unique ID of the quoted author, requiered for post with type: quote',
       example: 'c04fcf4b-400c-4f45-8318-e6e692266f55',
     })
-    public quoteAuthor: string;
+    public quoteAuthorId: string;
 
     @ApiProperty({
       description: 'URL for video content, requiered for post with type: video',

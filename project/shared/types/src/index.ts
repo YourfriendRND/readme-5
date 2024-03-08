@@ -9,3 +9,4 @@ export * from './lib/quote-post.interface';
 export * from './lib/tag.interface';
 export * from './lib/comment.interface';
 export * from './lib/post.type';
+export * from './lib/mongodb.type';

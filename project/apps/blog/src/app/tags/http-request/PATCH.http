@@ -1,0 +1,6 @@
+PATCH http://localhost:3000/api/tags/050771e7-816b-4a3d-b5cc-8cbe534a58b6 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "ЭтоНеВорк"
+}

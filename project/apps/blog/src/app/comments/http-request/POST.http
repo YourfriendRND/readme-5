@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/comments HTTP/1.1
+content-type: application/json
+
+{
+   "postId": "67ce5564-b54d-4f6f-b2a7-2649bf3db092",
+   "authorId": "65a3f63cc013e4c03afc6a9d",
+   "text": "First comment"
+}

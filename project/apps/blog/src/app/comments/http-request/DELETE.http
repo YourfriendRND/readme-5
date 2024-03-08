@@ -1,0 +1,2 @@
+DELETE http://localhost:3000/api/comments/5aa03b89-8b86-4d1a-bbd4-86a08d175f2b HTTP/1.1
+content-type: application/json

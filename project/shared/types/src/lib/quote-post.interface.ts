@@ -2,7 +2,7 @@ import { PostInterface } from './post.interface';
 import { PostTypes } from './post.type';
 
 export interface QuotePostInterface extends PostInterface {
-  quoteAuthor: string;
+  quoteAuthorId: string;
   text: string;
   type: PostTypes.Quote;
 }

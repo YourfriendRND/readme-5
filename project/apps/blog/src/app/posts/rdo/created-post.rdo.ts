@@ -1,6 +1,7 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { TagInterface, PostTypes } from '@project/shared/types';
+import { TagRDO } from '../../tags/rdo/tag.rdo';
 
 export class PostRDO {
     @ApiProperty({
@@ -21,9 +22,14 @@ export class PostRDO {
 
     @ApiProperty({
       description: 'List of tags for post',
-      example: []
+      example: [{
+        id: 'db662724-f91d-4b46-8291-bccee0cf1a91',
+        name: 'henparty',
+      }
+      ]
     })
     @Expose()
+    @Type(() => TagRDO)
     public tags: TagInterface[];
 
     @ApiProperty({
@@ -73,7 +79,7 @@ export class PostRDO {
       example: 'c04fcf4b-400c-4f45-8318-e6e692266f55',
     })
     @Expose()
-    public quoteAuthor: string;
+    public quoteAuthorId: string;
 
     @ApiProperty({
       description: 'URL for video content, requiered for post with type: video',

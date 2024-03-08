@@ -48,12 +48,18 @@ export class AuthenticationService {
     if (!isPasswordCorrect) {
       throw new UnauthorizedException(UNAUTHORIZED_USER_MESSAGE)
     }
-
+    
     return existUser;
   }
 
   public async getUser(id: string): Promise<UserEntity | null> {
-    return await this.userRepository.findById(id);
+    const user =  await this.userRepository.findById(id);
+    
+    if (!user) {
+      throw new NotFoundException(`User with id: ${id} - not found`);
+    }
+
+    return user;
   }
 
 }

@@ -7,4 +7,11 @@ export interface PostInterface {
   authorId?: string;
   status: string;
   likesCount: number;
+  type: string;
+  announcement?: string;
+  text?: string;
+  url?: string;
+  quoteAuthorId?: string;
+  photo?: string;
+  videoUrl?: string;
 }

@@ -3,14 +3,14 @@ import { PostEntity } from '../post.abstract';
 
 export class QuotePostEntity extends PostEntity implements QuotePostInterface {
     public text: string;
-    public quoteAuthor: string;
+    public quoteAuthorId: string;
     public type: PostTypes.Quote;
     
     constructor(post: QuotePostInterface) {
         super(post);
         this.type = post.type;
         this.text = post.text;
-        this.quoteAuthor = post.quoteAuthor;
+        this.quoteAuthorId = post.quoteAuthorId;
     }
 
     toPOJO() {
@@ -18,7 +18,7 @@ export class QuotePostEntity extends PostEntity implements QuotePostInterface {
             ...super.toPOJO(),
             type: this.type,
             text: this.text,
-            quoteAuthor: this.quoteAuthor,
+            quoteAuthorId: this.quoteAuthorId,
         }
     }
 }

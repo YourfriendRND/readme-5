@@ -26,4 +26,8 @@ export class CommentEntity implements CommentInterface, Entity<string> {
       postId: this.postId,
     }
   }
+
+  static fromObject(data: CommentInterface): CommentEntity {
+    return new CommentEntity(data);
+  }
 }

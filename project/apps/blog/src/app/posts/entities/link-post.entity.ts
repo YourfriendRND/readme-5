@@ -18,4 +18,8 @@ export class LinkPostEntity extends PostEntity implements LinkPostInterface {
             type: this.type,
         }
     }
+
+    fromObject(data: LinkPostInterface): LinkPostEntity {
+      return new LinkPostEntity(data);
+    }
 }

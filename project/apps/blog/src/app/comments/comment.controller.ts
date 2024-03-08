@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Query, HttpStatus, HttpCode, Param } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiQuery, ApiParam } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiQuery, ApiParam, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { fillDTO } from '@project/shared/helpers';
 import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 import { CommentService } from './comment.service';
@@ -24,8 +24,15 @@ export class CommentController {
     return fillDTO(CommentRDO, createdComment.toPOJO());
   }
 
-  @ApiResponse({
-    type: CommentRDO,
+  @ApiOkResponse({
+    schema: {
+      properties: {
+        comments: {
+          type: 'array',
+          items: { $ref: getSchemaPath(CommentRDO) }
+        }
+      }
+    },
     status: HttpStatus.OK,
     isArray: true,
     description: 'The list of comments for post'
@@ -44,11 +51,10 @@ export class CommentController {
   public async index(
     @Param('id') id: string,
     @Query() limit?: string,
-  ): Promise<CommentRDO> {
-    const commentCount = Number(limit) ? Number(limit) : DEFAULT_LIMIT_ENTITIES;
-    const comments = await this.commentService.findComments(id, commentCount);
-    const plainComments = comments.map((comment) => comment.toPOJO());
-    return fillDTO<CommentRDO, Record<string, typeof plainComments>>(CommentRDO, {'comments': plainComments});
+  ): Promise<CommentRDO[]> {
+    const comments = await this.commentService.findComments(id, limit);
+    const plainComments = comments.map((comment) => fillDTO(CommentRDO, comment.toPOJO()));
+    return plainComments;
   }
 
   @ApiResponse({

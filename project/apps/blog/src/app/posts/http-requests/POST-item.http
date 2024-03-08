@@ -1,0 +1,14 @@
+POST http://localhost:3000/api/posts HTTP/1.1
+content-type: application/json
+
+{
+   "name": "Пост №9",
+   "status": "published",
+   "type": "text",
+   "authorId": "65a3f63cc013e4c03afc6a9d",
+   "text": "Super-text",
+   "announcement": "announce",
+   "tags": [
+    {"id": "db662724-f91d-4b46-8291-bccee0cf1a91"}
+   ]
+}

@@ -1,0 +1,14 @@
+PATCH  http://localhost:3000/api/posts/7775e3db-c4f5-48e6-987d-db8191aa2ef7 HTTP/1.1
+content-type: application/json
+
+{
+   "type": "text",
+   "announcement": "text",
+   "url": null,
+   "tags": [
+      {
+        "id": "db662724-f91d-4b46-8291-bccee0cf1a91",
+        "name": "житьвкайф"
+      }
+   ]
+}
