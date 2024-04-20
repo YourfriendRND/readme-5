@@ -9,11 +9,15 @@ import { LoggedUserRDO } from './rdo/logged-user.rdo';
 import { CONFLICT_USER_MESSAGE, NOT_FOUND_USER_MESSAGE, UNAUTHORIZED_USER_MESSAGE } from './authentication.constants';
 import { MongoIdValidationPipe } from '@project/shared/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { NotifyService } from '../notify/notify.service';
 
 @ApiTags('authetication')
 @Controller('auth')
 export class AuthenticationController {
-  constructor(private readonly authService: AuthenticationService) {}
+  constructor(
+    private readonly authService: AuthenticationService,
+    private readonly notifyService: NotifyService,  
+  ) {}
 
   @ApiResponse({
     type: UserRDO,
@@ -30,6 +34,8 @@ export class AuthenticationController {
     dto: CreateUserDTO
   ): Promise<UserRDO> {
     const user = await this.authService.register(dto);
+    const { email, firstName, lastName } = user;
+    await this.notifyService.registerSubscriber({ email, firstName, lastName });
     return fillDTO(UserRDO, user.toPOJO())
   }
 
