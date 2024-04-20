@@ -29,3 +29,7 @@ export function fillDTO<T, V extends PlainObject>(
 export function getMongoConnectionString({username, password, host, port, dbName, authDataBase}: MongoConnectionInput): string {
   return `mongodb://${username}:${password}@${host}:${port}/${dbName}?authSource=${authDataBase}`;
 }
+
+export function getRabbitMQConnectionString({user, password, host, port}): string {
+  return `amqp://${user}:${password}@${host}:${port}`;
+}
