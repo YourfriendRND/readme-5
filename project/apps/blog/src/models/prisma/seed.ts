@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 // Закоментировал так как ts-node при исполнении не видит пути через @project
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { PostTypes } from '../../../../../shared/types/src/lib/post.type';
+import { PostInterface } from '@project/shared/types';
 
 function randomInt (a = 1, b = 0) {
     const lower = Math.ceil(Math.min(a, b));
@@ -61,7 +62,7 @@ const mockComments = [
     },
 ];
 
-const mockPosts = mockUsersId.map((id, idx) => {
+const mockPosts: PostInterface[] = mockUsersId.map((id, idx) => {
     const randomNumber = randomInt(0, mockTags.length);
     const type = getRandomElement(Object.values(PostTypes));
     const anotherAuthorId = getRandomElement(mockUsersId);
@@ -80,6 +81,8 @@ const mockPosts = mockUsersId.map((id, idx) => {
         quotedText: type === PostTypes.Quote ? 'Quote text example' : undefined,
         announcement: type === PostTypes.Text ? 'Another text' : undefined,
         videoUrl: type === PostTypes.Video ? 'http://sample.edu/hobbies.html' : undefined,
+        likesCount: randomInt(2, 17),
+        publishedAt: new Date(),
     }
 })
 
@@ -125,6 +128,8 @@ async function seedDb(prismaClient: PrismaClient): Promise<void> {
                 comments: post.comments.length ? {
                     create: post.comments
                 } : undefined,
+                likesCount: post.likesCount,
+                publishedAt: post.publishedAt,
             }
         });
     }

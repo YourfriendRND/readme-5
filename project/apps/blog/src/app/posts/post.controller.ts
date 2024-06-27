@@ -1,11 +1,10 @@
 import { Controller, Body, Post, Patch, Get, Delete, Param, Query, HttpStatus, HttpCode, NotFoundException } from '@nestjs/common';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiResponse, ApiTags, getSchemaPath } from '@nestjs/swagger';
-import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
+import { DEFAULT_LIMIT_ENTITIES, POST_NOT_FOUND } from '@project/shared/constants';
 import { fillDTO } from '@project/shared/helpers';
-import { PostDTO } from './dto/post.dto';
 import { PostService } from './post.service';
-import { PostRDO } from './rdo/created-post.rdo';
-import { POST_NOT_FOUND } from './post.constant';
+import { PostDTO } from '@project/shared/dto';
+import { PostRDO } from '@project/shared/rdo';
 
 @ApiTags('blog-posts')
 @Controller('posts')
@@ -93,14 +92,11 @@ export class PostController {
     @Get()
     public async index(
         @Query('authorId') authorId?: string, // Временное решение, пока нет аутентификации, после буду  брать данные из токена
+        @Query('sort') sort?: string,
         @Query('limit') limit?: number,
         @Query('page') page?: number
-    ): Promise<PostRDO[]> {
-        if (!authorId) {
-            throw new NotFoundException('The author of the posts is unknown')
-        }
-        
-        const posts = await this.postService.find(authorId, limit, page);
+    ): Promise<PostRDO[]> {    
+        const posts = await this.postService.find(authorId, sort, limit, page);
         const plainPosts = posts.map((post) => fillDTO(PostRDO, post.toPOJO()));
         return plainPosts;
     }
@@ -120,9 +116,19 @@ export class PostController {
     })
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async delete(
+    public async delete(
         @Param('id') id: string,
     ): Promise<void> {
         await this.postService.deletePost(id);
+    }
+
+    @Post('/:id/repost/:repostAuthorId')
+    public async createRepost(
+        @Param('id') id: string,
+        @Param('repostAuthorId') repostAuthorId: string
+    ): Promise<PostRDO> {
+        const repost = await this.postService.createRepost(id, repostAuthorId);
+
+        return fillDTO(PostRDO, repost.toPOJO());
     }
 }

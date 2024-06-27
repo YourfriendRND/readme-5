@@ -1,5 +1,5 @@
 import { Entity } from '@project/shared/core';
-import { PostInterface, TagInterface } from '@project/shared/types';
+import { PostInterface, TagInterface, CommentInterface } from '@project/shared/types';
 
 export class PostEntity implements PostInterface, Entity<string> {
     public id?: string;
@@ -16,6 +16,11 @@ export class PostEntity implements PostInterface, Entity<string> {
     public quotedText?: string;
     public photo?: string;
     public videoUrl?: string;
+    public publishedAt: Date;
+    public isRepost?: boolean;
+    public originalAuthorId?: string;
+    public originalPostId?: string;
+    public comments?: CommentInterface[]
 
     constructor(post: PostInterface) {
         this.populate(post);
@@ -36,6 +41,11 @@ export class PostEntity implements PostInterface, Entity<string> {
         this.quotedText = post.quotedText;
         this.photo = post.photo;
         this.videoUrl = post.videoUrl;
+        this.publishedAt = post.publishedAt;
+        this.isRepost = post.isRepost;
+        this.originalAuthorId = post.originalAuthorId;
+        this.originalPostId = post.originalPostId;
+        this.comments = post.comments;
     }
 
     public toPOJO() {
@@ -54,6 +64,11 @@ export class PostEntity implements PostInterface, Entity<string> {
             quotedText: this.quotedText !== null ? this.quotedText : undefined,
             photo: this.photo !== null ? this.photo : undefined,
             videoUrl: this.videoUrl !== null ? this.videoUrl : undefined,
+            publishedAt: this.publishedAt,
+            isRepost: this.isRepost,
+            originalAuthorId: this.originalAuthorId,
+            originalPostId: this.originalPostId,
+            comments: this.comments,
         }
     }
 

@@ -1,15 +1,31 @@
-import { Body, Controller, Get, Post, Param, HttpStatus, UseGuards } from '@nestjs/common';
+import { 
+  Body, 
+  Controller, 
+  Get, 
+  Post, 
+  Param, 
+  HttpStatus, 
+  UseGuards, 
+  Req,
+  HttpCode,
+  Patch
+} from '@nestjs/common';
 import { ApiTags, ApiResponse} from '@nestjs/swagger';
 import { AuthenticationService } from './authentication.service';
-import { CreateUserDTO } from './dto/create-user.dto';
 import { fillDTO } from '@project/shared/helpers';
-import { UserRDO } from './rdo/user.rdo';
-import { LoginUserDTO } from './dto/login-user.dto';
-import { LoggedUserRDO } from './rdo/logged-user.rdo';
 import { CONFLICT_USER_MESSAGE, NOT_FOUND_USER_MESSAGE, UNAUTHORIZED_USER_MESSAGE } from './authentication.constants';
 import { MongoIdValidationPipe } from '@project/shared/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { NotifyService } from '../notify/notify.service';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { UserEntity } from '../user/user.entity';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
+import { CreatedUserDTO, ChangedPasswordDTO } from '@project/shared/dto';
+import { UserRDO, LoggedUserRDO, UpdatedUserRDO, UserTokensRDO  } from '@project/shared/rdo';
+
+type RequestWithUser = {
+  user?: UserEntity
+}
 
 @ApiTags('authetication')
 @Controller('auth')
@@ -31,7 +47,7 @@ export class AuthenticationController {
   @Post('register')
   public async create(
     @Body()
-    dto: CreateUserDTO
+    dto: CreatedUserDTO
   ): Promise<UserRDO> {
     const user = await this.authService.register(dto);
     const { email, firstName, lastName } = user;
@@ -48,15 +64,15 @@ export class AuthenticationController {
     status: HttpStatus.UNAUTHORIZED,
     description: UNAUTHORIZED_USER_MESSAGE,
   })
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   public async login(
-    @Body()
-    dto: LoginUserDTO
+    @Req()
+    { user }: RequestWithUser
   ): Promise<LoggedUserRDO> {
-    const verifyUser = await this.authService.verifyUser(dto);
-    const userToken = await this.authService.createUserToken(verifyUser);
+    const userToken = await this.authService.createUserToken(user);
     return fillDTO(LoggedUserRDO, {
-      ...verifyUser.toPOJO(),
+      ...user.toPOJO(),
       ...userToken,
     });
   }
@@ -75,5 +91,42 @@ export class AuthenticationController {
   public async show(@Param('id', MongoIdValidationPipe) id: string): Promise<UserRDO> {
     const existUser = await this.authService.getUser(id);
     return fillDTO(UserRDO, existUser.toPOJO());
+  }
+
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get a new access/refresh tokens'
+  })
+  @UseGuards(JwtRefreshGuard)
+  public async refreshToken(
+    @Req() { user }: RequestWithUser
+  ): Promise<UserTokensRDO> {
+    const tokens = await this.authService.createUserToken(user);
+    return fillDTO(UserTokensRDO, { ...tokens });
+  }
+
+  @Post('check')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  public async checkUser (
+    @Req() { user: payload }: RequestWithUser
+  ) {
+    return payload;
+  }
+
+  @Patch('password/change')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  public async changedPassword(
+    @Req() { user }: RequestWithUser,
+    @Body() passChangesDTO: ChangedPasswordDTO,
+  ): Promise<UpdatedUserRDO> {
+    const updatedUser = await this.authService.changeUserPassword({ ...passChangesDTO, ...user });
+    
+    const updatedTokens = await this.authService.createUserToken(updatedUser);
+
+    return fillDTO(UpdatedUserRDO, { ...updatedUser.toPOJO(), ...updatedTokens });
   }
 }

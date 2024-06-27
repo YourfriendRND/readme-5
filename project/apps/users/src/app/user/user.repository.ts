@@ -16,6 +16,16 @@ export class UserRepository extends BaseMongoRepository<UserEntity, UserModel> {
     );
   }
 
+  public async findById(id: string): Promise<UserEntity> {
+    const user = await super.findById(id);
+    
+    if (user) {
+      user.id = id;
+    }
+
+    return user;
+  }
+
   public async findByEmail(email: string): Promise<UserEntity | null> {
     const targetUser = await this.model.findOne({ email }).exec();
     

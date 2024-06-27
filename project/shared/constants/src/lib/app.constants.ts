@@ -15,3 +15,5 @@ export type Environment = typeof APPLICATION_ENVIRONMENTS[number];
 export const SERVE_ROOT = '/static';
 
 export const DEFAULT_RABBIT_PORT = 5672;
+
+export const GLOBAL_ROUTE_PREFIX = 'api';

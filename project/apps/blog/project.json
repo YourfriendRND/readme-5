@@ -60,10 +60,17 @@
         "cwd": "apps/blog/src/models/prisma"
       }
     },
+    "db:migrate:reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate reset --force",
+        "cwd": "apps/blog/src/models/prisma"
+      }
+    },
     "db:migrate": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx prisma migrate dev --schema ./schema.prisma --skip-generate",
+        "command": "npx prisma migrate dev --schema ./schema.prisma",
         "cwd": "apps/blog/src/models/prisma"
       }
     },

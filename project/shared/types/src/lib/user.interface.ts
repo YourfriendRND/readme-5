@@ -6,4 +6,9 @@ export interface UserInterface {
   avatar: string;
   followers: number;
   posts: number;
+  createdAt?: Date;
+}
+
+export interface BlogUser {
+  id: string;
 }
