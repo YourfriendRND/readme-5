@@ -1,0 +1,28 @@
+#### Получение списка комментариев по id публикации
+GET http://localhost:3010/api/blog/87c12100-d655-4996-83f2-b136b3c9e329/comments HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTkwNDI4MDcsImV4cCI6MTcxOTA4NjAwN30.PhQSDVk-HL8ga8gcVjyQZBvvyJ1geTqjafd01UX63Rk
+
+#### Создание нового комментария к посту
+POST http://localhost:3010/api/blog/87c12100-d655-4996-83f2-b136b3c9e329/comments HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTg4NzA4MTIsImV4cCI6MTcxODkxNDAxMn0.6DDPLJmlYKEziSnK24OJwp9n52LpPELyJH-cs5PRPSk
+
+{
+    "text": "Мой четвертый комментарий"
+}
+
+#### Корректировка комментария 87c12100-d655-4996-83f2-b136b3c9e329
+PATCH http://localhost:3010/api/blog/87c12100-d655-4996-83f2-b136b3c9e329/comments/925f506e-c0ab-49b2-8809-e38de13dbeae HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTkwNDI4MDcsImV4cCI6MTcxOTA4NjAwN30.PhQSDVk-HL8ga8gcVjyQZBvvyJ1geTqjafd01UX63Rk
+
+{
+    "text": "Беру свои слова обратно, ты прав!!! Ну и ладна. Который час???"
+}
+
+#### Удаление комментария
+DELETE http://localhost:3010/api/blog/87c12100-d655-4996-83f2-b136b3c9e329/comments/2cfdd3b3-ff16-4c08-a488-1add4b545e31 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTkwNDI4MDcsImV4cCI6MTcxOTA4NjAwN30.PhQSDVk-HL8ga8gcVjyQZBvvyJ1geTqjafd01UX63Rk
+

@@ -1,3 +1,4 @@
+import { CommentInterface } from './comment.interface';
 import { TagInterface } from './tag.interface';
 
 export interface PostInterface {
@@ -15,4 +16,9 @@ export interface PostInterface {
   quotedText?: string;
   photo?: string;
   videoUrl?: string;
+  publishedAt: Date;
+  isRepost?: boolean;
+  originalAuthorId?: string;
+  originalPostId?: string;
+  comments?: CommentInterface[]
 }

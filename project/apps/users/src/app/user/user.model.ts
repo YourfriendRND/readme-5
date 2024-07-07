@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { UserInterface } from '@project/shared/types';
 import { AuthUserInterface } from '@project/shared/types';
@@ -30,7 +30,7 @@ export class UserModel extends Document implements  UserInterface, AuthUserInter
     public passwordHash: string;
 
     @Prop({
-        default: 0
+        default: 0,
     })
     public followers: number;
 

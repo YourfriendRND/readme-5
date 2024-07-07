@@ -40,6 +40,12 @@ export class CommentRepository extends BasePrismaRepository<CommentEntity, Comme
     });
   }
 
+  public async delete(id: string, postId: string): Promise<void> {
+    await this.client.comment.delete({
+      where: { id: id, postId: postId }
+    });
+  }
+
   public async save(entity: CommentEntity, postId: string): Promise<CommentEntity> {
     const createdComment = await this.client.comment.create({
       data: {
@@ -66,6 +72,9 @@ export class CommentRepository extends BasePrismaRepository<CommentEntity, Comme
       },
       take: count,
       skip: skipCount,
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
 
     return posts.map((post) => this.createEntityFromDocument(post));

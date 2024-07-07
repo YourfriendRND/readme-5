@@ -16,3 +16,7 @@ export * from './lib/stored-file.interface';
 export * from './lib/file.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/rabbit-routing.enum';
+export * from './lib/jwt.interface';
+export * from './lib/refresh-token-payload.interface';
+export * from './lib/date-time.type';
+export * from './lib/follower.interface';

@@ -1,0 +1,47 @@
+POST http://localhost:3010/api/blog HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTg4NzA4MTIsImV4cCI6MTcxODkxNDAxMn0.6DDPLJmlYKEziSnK24OJwp9n52LpPELyJH-cs5PRPSk
+
+{
+    "name": "Кукушкин пост о жизни в мегаполисе №1",
+    "status": "published",
+    "type": "text",
+    "text": "Сегодня, я решила вести свой блог о том как интересно жить в большом городе. Будет ли это легко? Не знаю? проверим и скоро вы узнаете подробности.",
+    "announcement": "Кукушка о жизни. Начало. Пост №1. Введение. О себе"
+}
+
+#### Получение списка публикаций без параметров
+
+GET http://localhost:3010/api/blog HTTP/1.1
+content-type: application/json
+
+#### Получение лимитированного списка публикаций
+
+GET http://localhost:3010/api/blog?limit=2 HTTP/1.1
+content-type: application/json
+
+#### Получение публикаций конкретного пользователя
+
+GET http://localhost:3010/api/blog?authorId=665ea2312f3f6f55f388246b  HTTP/1.1
+content-type: application/json
+
+#### Редактирование публикации
+
+PATCH http://localhost:3010/api/blog/726e056d-fc81-4e73-8823-c0b245fb1a24  HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTg4NzA4MTIsImV4cCI6MTcxODkxNDAxMn0.6DDPLJmlYKEziSnK24OJwp9n52LpPELyJH-cs5PRPSk
+
+{
+    "status": "draft"
+}
+
+#### Удаление поста
+
+DELETE http://localhost:3010/api/blog/09a29b15-48dd-4416-bc3b-b481083d37ef HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTk0NjUwMzEsImV4cCI6MTcxOTUwODIzMX0.9RJ_l0jX9drwdOb0RUN6AlAj3xvPwWhfoGnVBkmHaPQ
+
+#### Репост
+POST http://localhost:3010/api/blog/repost/a41ae78f-743d-442d-84c3-bbad744b111d HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTk0NjUwMzEsImV4cCI6MTcxOTUwODIzMX0.9RJ_l0jX9drwdOb0RUN6AlAj3xvPwWhfoGnVBkmHaPQ

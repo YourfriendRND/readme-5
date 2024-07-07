@@ -2,14 +2,14 @@ POST http://localhost:3002/api/auth/register HTTP/1.1
 content-type: application/json
 
 {
-   "firstName": "Игорь",
-   "lastName": "Рыбкин",
-   "email": "mechta@yandex.ru",
-   "password": "qwe123!"
+   "firstName": "Никита",
+   "lastName": "Северсталь",
+   "email": "staaaal@yandex.ru",
+   "password": "qwe123!!"
 }
 
 #### 
-GET http://localhost:3002/api/auth/65d8eb73ab733b50fa262db7 HTTP/1.1
+GET http://localhost:3002/api/auth/664188b1dc09fc77e1f4b048 HTTP/1.1
 content-type: application/json
 
 ####
@@ -17,11 +17,31 @@ POST http://localhost:3002/api/auth/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "mechta@yandex.ru",
-    "password": "qwe123!"
+    "email": "staaaal@yandex.ru",
+    "password": "qwe123!!"
 }
 
 ####
-GET http://localhost:3002/api/auth/65d8eb73ab733b50fa262db7 HTTP/1.1
+GET http://localhost:3002/api/auth/664188b1dc09fc77e1f4b048 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NWQ4ZWI3M2FiNzMzYjUwZmEyNjJkYjciLCJlbWFpbCI6Im1lY2h0YUB5YW5kZXgucnUiLCJmaXJzdE5hbWUiOiLQmNCz0L7RgNGMIiwibGFzdE5hbWUiOiLQoNGL0LHQutC40L0iLCJpYXQiOjE3MDkyNjQ0MzUsImV4cCI6MTcwOTMwMDQzNX0.nJ-GV7vgXeqvz41JE6-9u-cehIekrfAfcsk7SqaDOwk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjQxODhiMWRjMDlmYzc3ZTFmNGIwNDgiLCJlbWFpbCI6InN0YWFhYWxAeWFuZGV4LnJ1IiwibGFzdE5hbWUiOiLQodC10LLQtdGA0YHRgtCw0LvRjCIsImZpcnN0TmFtZSI6ItCd0LjQutC40YLQsCIsImlhdCI6MTcxNzA2MDUzNywiZXhwIjoxNzE3MTAzNzM3fQ.qw7C8F0_DuCVfMSq-FylzBSOzMZElYBu4FlxJEDfXZs
+
+###
+POST http://localhost:3002/api/auth/refresh HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NjQxODhiMWRjMDlmYzc3ZTFmNGIwNDgiLCJlbWFpbCI6InN0YWFhYWxAeWFuZGV4LnJ1IiwibGFzdE5hbWUiOiLQodC10LLQtdGA0YHRgtCw0LvRjCIsImZpcnN0TmFtZSI6ItCd0LjQutC40YLQsCIsInRva2VuSWQiOiI4ZTM5M2UzZC0xM2YyLTQ4MzktODBhZS1hMjdlZjhlMDA5ZTciLCJpYXQiOjE3MTcwNjA1MzcsImV4cCI6MTcxNzQ5MjUzN30.ZfW1AKusVafiB8p9Z9EQtvZGyEcVb_maM5wU_xIoD4U
+
+#####
+PATCH http://localhost:3002/api/auth/password/change HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTc3MzM0NDgsImV4cCI6MTcxNzc3NjY0OH0.s02ZvO8dQMcvKnI-OW8i5QkgUMzArjggd5kZMg5a80k
+
+{
+    "currentPassword": "sdfhi3i324!",
+    "password": "hjsfbhdjs2"
+}
+
+#### Возврат пользовательских данных по токену
+POST  http://localhost:3002/api/auth/check HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTc5MTExNDgsImV4cCI6MTcxNzk1NDM0OH0.BWHpvipUGNterxo3pAM0U8yBS01WC-7Cl1ev3hRBrck

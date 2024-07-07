@@ -1,10 +1,10 @@
-import { Body, Controller, Delete, Get, Post, Query, HttpStatus, HttpCode, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Patch, Query, HttpStatus, HttpCode, Param } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiQuery, ApiParam, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { fillDTO } from '@project/shared/helpers';
 import { DEFAULT_LIMIT_ENTITIES } from '@project/shared/constants';
 import { CommentService } from './comment.service';
-import { CommentDTO } from './dto/comment.dto';
-import { CommentRDO } from './rdo/comment.rdo';
+import { CommentDTO, UpdateCommentDTO } from '@project/shared/dto';
+import { CommentRDO } from '@project/shared/rdo';
 
 @ApiTags('blog-comments')
 @Controller('posts/:postId/comments')
@@ -59,6 +59,23 @@ export class CommentController {
     return plainComments;
   }
 
+  @Get('/:commentId')
+  public async getCommentDetails(
+    @Param('commentId') commentId: string,
+  ): Promise<CommentRDO> {
+    const comment = await this.commentService.findCommentById(commentId);
+    return fillDTO(CommentRDO, comment.toPOJO());
+  }
+
+  @Patch('/:commentId')
+  public async updateComment(
+    @Body() dto: UpdateCommentDTO,
+  ): Promise<CommentRDO> {
+    const updatedComment = await this.commentService.updateComment(dto);
+
+    return fillDTO(CommentRDO, updatedComment.toPOJO());
+  }
+
   @ApiResponse({
     status: HttpStatus.NO_CONTENT,
     description: 'Comment has been deleted successfully'
@@ -68,12 +85,13 @@ export class CommentController {
     required: true,
     description: 'Uniq id of deleted comment'
   })
-  @Delete('/')
+  @Delete('/:commentId')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(
-    @Param('postId') postId: string
+    @Param('postId') postId: string,
+    @Param('commentId') commentId: string
   ): Promise<void> {
-    await this.commentService.deleteComment(postId);
+    await this.commentService.deleteComment(commentId, postId);
   }
 
 }

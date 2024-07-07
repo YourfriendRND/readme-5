@@ -4,11 +4,15 @@ import * as Joi from 'joi';
 export interface JWTConfig {
     accessTokenSecret: string;
     accessTokenExpiresIn: string;
+    refreshTokenSecret: string;
+    refreshTokenExpiresIn: string;
 }
 
 const validationSchema = Joi.object({
     accessTokenSecret: Joi.string().required(),
     accessTokenExpiresIn: Joi.string().required(),
+    refreshTokenSecret: Joi.string().required(),
+    refreshTokenExpiresIn: Joi.string().required()
 })
 
 function validationConfig(config: JWTConfig): void {
@@ -21,7 +25,9 @@ function validationConfig(config: JWTConfig): void {
 function getConfig(): JWTConfig {
     const config: JWTConfig = {
         accessTokenSecret: process.env['JWT_ACCESS_TOKEN_SECRET']!,
-        accessTokenExpiresIn: process.env['JWT_ACCESS_EXPIRES_IN']!
+        accessTokenExpiresIn: process.env['JWT_ACCESS_EXPIRES_IN']!,
+        refreshTokenSecret: process.env['JWT_REFRESH_TOKEN_SECRET']!,
+        refreshTokenExpiresIn: process.env['JWT_REFRESH_EXPIRES_IN']!,
     };
 
     validationConfig(config);

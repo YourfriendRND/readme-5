@@ -12,6 +12,7 @@ export class UserEntity implements AuthUserInterface, Entity<string> {
   public followers: number;
   public posts: number;
   public passwordHash: string;
+  public createdAt: Date;
 
   constructor(user: AuthUserInterface) {
     this.populate(user);
@@ -25,9 +26,10 @@ export class UserEntity implements AuthUserInterface, Entity<string> {
       firstName: this.firstName,
       lastName: this.lastName,
       avatar: this.avatar,
-      followers: this.followers,
+      followers: this.followers ?? 0,
       posts: this.posts,
       passwordHash: this.passwordHash,
+      createdAt: this.createdAt,
     }
   }
 
@@ -37,9 +39,9 @@ export class UserEntity implements AuthUserInterface, Entity<string> {
     this.lastName = user.lastName;
     this.email = user.email;
     this.avatar = user.avatar;
-    this.followers = user.followers;
     this.posts = user.posts;
     this.passwordHash = user.passwordHash;
+    this.createdAt = user.createdAt;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

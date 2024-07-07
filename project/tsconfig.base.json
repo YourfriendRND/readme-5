@@ -16,17 +16,21 @@
     "baseUrl": ".",
     "paths": {
       "@project/constants": ["constants/src/index.ts"],
+      "@project/project/shared/dto": ["project/shared/dto/src/index.ts"],
       "@project/shared/config/blog": ["shared/config/blog/src/index.ts"],
       "@project/shared/config/file-loader-up": [
         "shared/config/file-loader-up/src/index.ts"
       ],
+      "@project/shared/config/gateway": ["shared/config/gateway/src/index.ts"],
       "@project/shared/config/notificator": [
         "shared/config/notificator/src/index.ts"
       ],
       "@project/shared/config/users": ["shared/config/users/src/index.ts"],
       "@project/shared/constants": ["shared/constants/src/index.ts"],
       "@project/shared/core": ["shared/core/src/index.ts"],
+      "@project/shared/dto": ["shared/dto/src/index.ts"],
       "@project/shared/helpers": ["shared/helpers/src/index.ts"],
+      "@project/shared/rdo": ["shared/rdo/src/index.ts"],
       "@project/shared/types": ["shared/types/src/index.ts"]
     }
   },

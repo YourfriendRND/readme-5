@@ -8,11 +8,11 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { GLOBAL_ROUTE_PREFIX } from '@project/shared/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(GLOBAL_ROUTE_PREFIX);
   app.useGlobalPipes(new ValidationPipe())
 
   const config = new DocumentBuilder()
@@ -28,7 +28,7 @@ async function bootstrap() {
     const port = configService.get('application.port');
 
     await app.listen(port);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`);
+  Logger.log(`🚀 Application is running on: http://localhost:${port}/${GLOBAL_ROUTE_PREFIX}`);
 }
 
 bootstrap();
