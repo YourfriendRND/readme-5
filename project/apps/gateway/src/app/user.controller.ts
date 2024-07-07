@@ -1,9 +1,23 @@
-import { Controller, Req, Body, Post, Patch, Request, UseFilters, Get, Param } from '@nestjs/common';
+import { 
+    Controller, 
+    Req, 
+    Body, 
+    Post, 
+    Patch, 
+    Request, 
+    UseFilters, 
+    Get, 
+    Param, 
+    UseGuards,
+    HttpCode, 
+    HttpStatus
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServicesURL } from './app.config';
-import { LoginUserDTO, CreatedUserDTO, ChangedPasswordDTO } from '@project/shared/dto';
+import { LoginUserDTO, CreatedUserDTO, ChangedPasswordDTO, FollowerDTO } from '@project/shared/dto';
 import { LoggedUserRDO, UpdatedUserRDO, UserRDO, UserTokensRDO } from '@project/shared/rdo';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
+import { CheckAuthGuard } from './guards/check-auth.guard';
 
 @Controller('users')
 @UseFilters(AxiosExceptionFilter)
@@ -69,6 +83,35 @@ export class UserController {
                 'Authorization': request.headers['authorization']
             }
         })
+
+        return data;
+    }
+
+    @Post('/follow/:userId')
+    @UseGuards(CheckAuthGuard)
+    public async followToUser(
+        @Req() request: Request,
+        @Param('userId') userId: string
+    ) {
+        const { data } = await this.httpService.axiosRef.post(`${ApplicationServicesURL.Followers}`, {
+            followerId: request['user']?.id,
+            userId,
+        });
+
+        return data;
+    }
+
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @Post('/unfollow/:userId')
+    @UseGuards(CheckAuthGuard)
+    public async unfollowFromUser(
+        @Req() request: Request,
+        @Param('userId') userId: string
+    ) {
+        const { data } = await this.httpService.axiosRef.post(`${ApplicationServicesURL.Followers}/unfollow/${userId}`, {
+            followerId: request['user']?.id,
+            userId,
+        });
 
         return data;
     }

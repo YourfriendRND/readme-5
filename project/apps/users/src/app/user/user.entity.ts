@@ -26,7 +26,7 @@ export class UserEntity implements AuthUserInterface, Entity<string> {
       firstName: this.firstName,
       lastName: this.lastName,
       avatar: this.avatar,
-      followers: this.followers,
+      followers: this.followers ?? 0,
       posts: this.posts,
       passwordHash: this.passwordHash,
       createdAt: this.createdAt,
@@ -39,7 +39,6 @@ export class UserEntity implements AuthUserInterface, Entity<string> {
     this.lastName = user.lastName;
     this.email = user.email;
     this.avatar = user.avatar;
-    this.followers = user.followers;
     this.posts = user.posts;
     this.passwordHash = user.passwordHash;
     this.createdAt = user.createdAt;

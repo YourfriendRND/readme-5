@@ -1,13 +1,35 @@
-#### Регистрация нового пользователя
+#
+
+    # "email": "ptichka-sinichka@mail.net",
+    # "password": "34353uytjfd",
+    # "firstName": "Мария",
+    # "lastName": "Курапаткина"
+
+    # "email": "albatroz@mail.net",
+    # "password": "42342odfmn!",
+    # "firstName": "Иванушка",
+    # "lastName": "Интернешнл"
+
+    # "email": "konchita@mail.ru",
+    # "password": "!@34fkdpD?",
+    # "firstName": "Кончита",
+    # "lastName": "Веселова"
+
+    # "email": "anton@mail.ru",
+    # "password": "oefknf!Er21",
+    # "firstName": "Антон",
+    # "lastName": "Иванов"
+
+### Регистрация нового пользователя
 
 POST http://localhost:3010/api/users/register HTTP/1.1
 content-type: application/json
 
 {
-    "email": "kukuha@mail.com",
-    "password": "15560KukuhaP",
-    "firstName": "Томара",
-    "lastName": "Кукушкина"
+    "email": "anton@mail.ru",
+    "password": "oefknf!Er21",
+    "firstName": "Антон",
+    "lastName": "Иванов"
 }
 
 #### Авторизация пользователя
@@ -16,30 +38,39 @@ POST http://localhost:3010/api/users/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "kukuha@mail.com",
-    "password": "hjsfbhdjs2"
+    "email": "anton@mail.ru",
+    "password": "oefknf!Er21"
 }
 
 #### Получение информации о зарегистрированном пользователе
 
-GET http://localhost:3010/api/users/65a3f66ac7d55ebb0a1b9b65 HTTP/1.1
+GET http://localhost:3010/api/users/668aaffd1af89a2aa9a6c084 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTkwNDI4MDcsImV4cCI6MTcxOTA4NjAwN30.PhQSDVk-HL8ga8gcVjyQZBvvyJ1geTqjafd01UX63Rk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDM2NTMyMSwiZXhwIjoxNzIwNDA4NTIxfQ.EcmHbxtlmZI5qe15bIpA45TJQkz72fnEJpTPr2sghoM
 
 ##### Запрос на обновление пары токенов
 
 POST http://localhost:3010/api/users/refresh HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJ0b2tlbklkIjoiODVkMTU4ZjItZmJlNi00NTExLWFkNWYtMjM5ZDUyZWM4MDhmIiwiaWF0IjoxNzE5NDY1MDMxLCJleHAiOjE3MTk4OTcwMzF9.ZOm3FHOzFE3rTwbdPl5-S_qnvJcBSs2u0fplYxnns58
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsInRva2VuSWQiOiI3MDNhMzQ0OS0xYTI5LTQwMWYtOWY5Yi1jYjhhOTE3ZTkxNjEiLCJpYXQiOjE3MjAzNjUzMjEsImV4cCI6MTcyMDc5NzMyMX0.vwUHJG80rbKQ57FaRUDxhjWUP-TGH0Wf34bi8IGgeWA
 
 ##### Смена пароля пользователя
 PATCH http://localhost:3010/api/users/password/change HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJ0b2tlbklkIjoiMTIwODVkZWYtYjc2ZC00OTM1LTg0M2QtNTcyM2VlYTVlYjExIiwiaWF0IjoxNzE5MDQyODA3LCJleHAiOjE3MTk0NzQ4MDd9.0hYrzcTm10Ad0taEhxSvZ0Y9boISOIkcaLlRoJRfkMA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MjAzNjIyNDEsImV4cCI6MTcyMDQwNTQ0MX0.iVc54xdjxV-CssX179IsLnpXRhL_d708KEm644gsGrE
 
 {
     "currentPassword": "15560KukuhaP",
     "password": "hjsfbhdjs2"
 }
 
+##### Подписка на пользователя
+
+POST http://localhost:3010/api/users/follow/668ab0d23bfdcfaca34434ca HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDM2NTMyMSwiZXhwIjoxNzIwNDA4NTIxfQ.EcmHbxtlmZI5qe15bIpA45TJQkz72fnEJpTPr2sghoM
+
+##### Отписка от пользователей
+POST http://localhost:3010/api/users/unfollow/668aaffd1af89a2aa9a6c084 HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDM2NTMyMSwiZXhwIjoxNzIwNDA4NTIxfQ.EcmHbxtlmZI5qe15bIpA45TJQkz72fnEJpTPr2sghoM

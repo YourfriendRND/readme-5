@@ -77,7 +77,6 @@ export class BlogController {
         }
 
         const authorId = request['user']?.id;
-        console.log(authorId)
 
         const { data } = await this.httpService.axiosRef.post(`${ApplicationServicesURL.Blog}/${postId}/repost/${authorId}`, null);
 

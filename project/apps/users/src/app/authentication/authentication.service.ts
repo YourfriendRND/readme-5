@@ -23,6 +23,7 @@ import jwtConfig from 'shared/config/users/src/lib/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { RefreshTokenService } from '../refresh-token/refresh-token.service';
 import { createJWTPayload } from '@project/shared/helpers';
+import { FollowerService } from '../follower/follower.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -32,7 +33,8 @@ export class AuthenticationService {
     private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY) private readonly jwtOptions: ConfigType<typeof jwtConfig>,
-    private readonly refreshTokenService: RefreshTokenService
+    private readonly refreshTokenService: RefreshTokenService,
+    private readonly followerService: FollowerService,
   ) {}
 
   public async register({email, password, firstName, lastName}: CreatedUserDTO): Promise<UserEntity> {
@@ -76,11 +78,15 @@ export class AuthenticationService {
 
   public async getUser(id: string): Promise<UserEntity | null> {
     const user =  await this.userRepository.findById(id);
+   
     
     if (!user) {
       throw new NotFoundException(`User with id: ${id} - not found`);
     }
 
+    const followers = await this.followerService.countFollowers(user.id);
+    user.followers = followers;
+    
     return user;
   }
 

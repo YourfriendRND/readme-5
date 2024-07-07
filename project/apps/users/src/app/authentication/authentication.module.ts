@@ -10,6 +10,7 @@ import { NotifyModule } from '../notify/notify.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { RefreshTokenModule } from '../refresh-token/refresh-token.module';
+import { FollowerModule } from '../follower/follower.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RefreshTokenModule } from '../refresh-token/refresh-token.module';
     }),
     NotifyModule,
     RefreshTokenModule,
+    FollowerModule,
   ],
   controllers: [AuthenticationController],
   providers: [
