@@ -7,7 +7,7 @@ export class PostEntity implements PostInterface, Entity<string> {
     public tags: TagInterface[];
     public authorId?: string;
     public status: string;
-    public likesCount: number;
+    public likes: number;
     public type: string;
     public announcement?: string;
     public text?: string;
@@ -32,7 +32,7 @@ export class PostEntity implements PostInterface, Entity<string> {
         this.tags = post.tags;
         this.authorId = post.authorId;
         this.status = post.status;
-        this.likesCount = post.likesCount;
+        this.likes = post.likes ?? 0;
         this.type = post.type;
         this.announcement = post.announcement;
         this.text = post.text;
@@ -54,7 +54,7 @@ export class PostEntity implements PostInterface, Entity<string> {
             name: this.name,
             tags: this.tags,
             status: this.status,
-            likesCount: this.likesCount,
+            likes: this.likes,
             type: this.type,
             authorId: this.authorId,
             announcement: this.announcement !== null ? this.announcement : undefined,

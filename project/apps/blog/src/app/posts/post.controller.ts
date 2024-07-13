@@ -3,8 +3,8 @@ import { ApiOkResponse, ApiParam, ApiQuery, ApiResponse, ApiTags, getSchemaPath 
 import { DEFAULT_LIMIT_ENTITIES, POST_NOT_FOUND } from '@project/shared/constants';
 import { fillDTO } from '@project/shared/helpers';
 import { PostService } from './post.service';
-import { PostDTO } from '@project/shared/dto';
-import { PostRDO } from '@project/shared/rdo';
+import { LikeDto, PostDTO } from '@project/shared/dto';
+import { AuthorPostsRDO, PostRDO } from '@project/shared/rdo';
 
 @ApiTags('blog-posts')
 @Controller('posts')
@@ -130,5 +130,23 @@ export class PostController {
         const repost = await this.postService.createRepost(id, repostAuthorId);
 
         return fillDTO(PostRDO, repost.toPOJO());
+    }
+    
+    @Get('/count/:authorId')
+    public async countUserPost(
+        @Param('authorId') authorId: string
+    ) {
+        const postCounts = await this.postService.getUserPostCount(authorId);
+        const response = { authorId, posts: postCounts };
+        return fillDTO(AuthorPostsRDO, response);
+    }
+
+    @Post('/like')
+    public async setLikeToPost(
+        @Body() likeDto: LikeDto
+    ): Promise<PostRDO> {
+        const post = await this.postService.likePost(likeDto);
+
+        return fillDTO(PostRDO, post.toPOJO());
     }
 }

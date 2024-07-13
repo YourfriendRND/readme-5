@@ -15,7 +15,7 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { ApplicationServicesURL } from './app.config';
 import { LoginUserDTO, CreatedUserDTO, ChangedPasswordDTO, FollowerDTO } from '@project/shared/dto';
-import { LoggedUserRDO, UpdatedUserRDO, UserRDO, UserTokensRDO } from '@project/shared/rdo';
+import { AuthorPostsRDO, LoggedUserRDO, UpdatedUserRDO, UserRDO, UserTokensRDO } from '@project/shared/rdo';
 import { AxiosExceptionFilter } from './filters/axios-exception.filter';
 import { CheckAuthGuard } from './guards/check-auth.guard';
 
@@ -56,6 +56,12 @@ export class UserController {
                 'Authorization': request.headers['authorization']
             }
         });
+
+        const userPostCount = await this.httpService.axiosRef.get<AuthorPostsRDO>(`${ApplicationServicesURL.Blog}/count/${data.id}`);
+
+        if (userPostCount) {
+            data.posts = userPostCount.data.posts;
+        }
 
         return data;
     }

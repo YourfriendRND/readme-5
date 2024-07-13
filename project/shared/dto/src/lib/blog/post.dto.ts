@@ -52,7 +52,7 @@ export class PostDTO {
   @ValidateNested({ each: true })
   @Type(() => TagDTO)
   @IsOptional()
-  public tags!: TagDTO[];
+  public tags?: TagDTO[];
 
   @ApiProperty({
     description: 'Status of post: draft or published',

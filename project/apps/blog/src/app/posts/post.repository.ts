@@ -4,6 +4,7 @@ import { BasePrismaRepository } from '@project/shared/core';
 import { PrismaClientService } from '@project/shared/config/blog';
 import { PostInterface, BlogUser } from '@project/shared/types';
 import { MAX_LIMIT_POST_ON_PAGE } from '@project/shared/constants';
+import { LikeEntity } from './entities/like.entity';
 
 @Injectable()
 export class PostRepository extends BasePrismaRepository<PostEntity, PostInterface> {
@@ -18,14 +19,19 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
       where: { id: id },
       include: {
         tags: true,
+        _count: {
+          select: { likes: true }
+        }
       }
     });
 
     if (!document) {
       throw new NotFoundException(`Post with id: ${id} not found`);
     }
-
-    return this.createEntityFromDocument(document);
+    
+    const post = this.createEntityFromDocument(document);
+    post.likes = document._count.likes;
+    return post;
   }
 
   public async save(entity: PostEntity): Promise<PostEntity> {
@@ -55,7 +61,6 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
         comments: {
           connect: []
         },
-        likesCount: 0,
         originalAuthorId: document.originalAuthorId,
         originalPostId: document.originalPostId,
         publishedAt: document.publishedAt,
@@ -65,8 +70,8 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
 
     return new PostEntity({ 
       ...createdPost, 
-      tags: [...entity.tags]
-    }) ;
+      tags: [...entity.tags],
+    });
   }
 
   public async find(authorId: string, sort = 'publishedAt', limit = MAX_LIMIT_POST_ON_PAGE, page = 1): Promise<PostEntity[]> {
@@ -83,7 +88,10 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
     const documents = await this.client.post.findMany({
       where: searchParams,
       include: {
-        tags: true
+        tags: true,
+        _count: {
+          select: { likes: true }
+        }
       },
       take: count,
       skip: skipCount,
@@ -92,7 +100,11 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
       }
     });
 
-    return documents.map((document) => this.createEntityFromDocument(document));
+    return documents.map((document) => {
+      const post = this.createEntityFromDocument(document);
+      post.likes = document._count.likes;
+      return post;
+    });
 
   }
 
@@ -127,7 +139,6 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
         quoteAuthorId: updatedDocument.quoteAuthorId,
         photo: updatedDocument.photo,
         videoUrl: updatedDocument.videoUrl,
-        likesCount: 0,
         tags: {
           connect: updatedDocument.tags?.length ? updatedDocument.tags.map((tag) => {
             return { id: tag.id }
@@ -139,10 +150,15 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
       },
       include: {
         tags: true,
+        _count: {
+          select: { likes: true }
+        }
       }
     });
 
-    return this.createEntityFromDocument(updatedEntity);
+    const post =  this.createEntityFromDocument(updatedEntity);
+    post.likes = updatedEntity._count.likes;
+    return post;
   }
 
   public async deleteById(id: string): Promise<void> {
@@ -169,5 +185,49 @@ export class PostRepository extends BasePrismaRepository<PostEntity, PostInterfa
     });
 
     return createdUser;
+  }
+
+  public async countPosts(authorId: string): Promise<number> {
+    await this.createUser(authorId);
+
+    const postCount = await this.client.post.count({
+      where: {
+        authorId
+      }
+    });
+
+    return postCount;
+  }
+
+  public async findUserLike(userId: string, postId: string): Promise<LikeEntity | null> {
+    await this.createUser(userId);
+
+    const like = await this.client.like.findFirst({
+      where: {
+        authorId: userId,
+        postId,
+      }
+    });
+
+    return like ? new LikeEntity(like) : null;
+  }
+
+  public async likePost(userId: string, postId: string): Promise<LikeEntity> {
+    const like =  await this.client.like.create({
+      data: {
+        authorId: userId,
+        postId,
+      }
+    });
+
+    return new LikeEntity(like)
+  }
+
+  public async dislikePost(likeId: string): Promise<void> {
+    await this.client.like.delete({
+      where: {
+        id: likeId
+      }
+    });
   }
 }

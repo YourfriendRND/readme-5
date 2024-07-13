@@ -14,6 +14,7 @@ model User {
   id           String @id
   posts        Post[]
   comments     Comment[]
+  likes        Like[]
 
   @@index([id])
   @@map("users")
@@ -26,7 +27,7 @@ model Post {
   author            User @relation(fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   authorId          String @map("author_id")
   status            String
-  likesCount        Int @default(0) @map("likes_count")
+  likes             Like[]
   type              String
   comments          Comment[]
   url               String?
@@ -69,4 +70,17 @@ model Comment {
 
   @@index([postId])
   @@map("comments")
+}
+
+model Like {
+  id            String @id @default(uuid()) @map("id")
+  author        User @relation(fields: [authorId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  post          Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId      String @map("author_id")
+  postId        String @map("post_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([authorId, postId])
+  @@map("likes")
 }

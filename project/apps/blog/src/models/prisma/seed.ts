@@ -17,11 +17,11 @@ function getRandomElement <T>(list: T[]): T {
 }
 
 const mockUsersId = [
-    '65a3f63cc013e4c03afc6a9d',
-    '65a3f64beb0cae3804f7d9ef',
-    '65a3f657fb04b4c2846e9094',
-    '65a3f65f2c1c3209873906fb',
-    '65a3f66ac7d55ebb0a1b9b65'
+    '668aa6c55d80819dd6dbd7b7',
+    '668aaffd1af89a2aa9a6c084',
+    '668ab0943bfdcfaca34434c7',
+    '668ab0d23bfdcfaca34434ca',
+    '668ced549a6feb7ab84e5881'
 ];
 
 const mockTags = [
@@ -81,7 +81,6 @@ const mockPosts: PostInterface[] = mockUsersId.map((id, idx) => {
         quotedText: type === PostTypes.Quote ? 'Quote text example' : undefined,
         announcement: type === PostTypes.Text ? 'Another text' : undefined,
         videoUrl: type === PostTypes.Video ? 'http://sample.edu/hobbies.html' : undefined,
-        likesCount: randomInt(2, 17),
         publishedAt: new Date(),
     }
 })
@@ -109,7 +108,7 @@ async function seedDb(prismaClient: PrismaClient): Promise<void> {
     }
 
     for (const post of mockPosts) {
-        await prismaClient.post.create({
+        const createdPost = await prismaClient.post.create({
             data: {
                 name: post.name,
                 tags: {
@@ -128,11 +127,27 @@ async function seedDb(prismaClient: PrismaClient): Promise<void> {
                 comments: post.comments.length ? {
                     create: post.comments
                 } : undefined,
-                likesCount: post.likesCount,
                 publishedAt: post.publishedAt,
             }
         });
+
+        const randomLikeCount = randomInt(0, mockUsersId.length - 1);
+
+        if (randomLikeCount) {
+            for (let i = 0; i < randomLikeCount; i++) {
+                const userId = mockUsersId[randomInt(0,  mockUsersId.length)];
+                if (userId && userId !== post.authorId) {
+                    await prismaClient.like.create({
+                        data: {
+                            postId: createdPost.id,
+                            authorId: userId
+                        }
+                    })
+                }
+            }
+        }
     }
+
 
     console.info('🤘️ Database was filled');
 }

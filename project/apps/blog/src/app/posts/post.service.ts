@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PostRepository } from './post.repository';
 import { PostEntity } from './post.abstract';
-import { PostDTO } from '@project/shared/dto';
+import { LikeDto, PostDTO } from '@project/shared/dto';
 import { PostInterface, PostTypes } from '@project/shared/types';
 import { TextPostEntity } from './entities/text-post.entity';
 import { VideoPostEntity } from './entities/video-post.entity';
@@ -18,9 +18,8 @@ export class PostService {
         const post = {
             name: dto.name,
             status: dto.status,
-            tags: dto.tags,
+            tags: dto?.tags ?? [],
             authorId: dto.authorId,
-            likesCount: 'likesCount' in dto ? dto.likesCount : 0,
             publishedAt: 'publishedAt' in dto ? dto.publishedAt : new Date()
         }
         switch(dto.type) {
@@ -99,7 +98,7 @@ export class PostService {
     }
 
     public async deletePost(id: string): Promise<void> {
-        const post = this.postRepository.findById(id);
+        const post = await this.postRepository.findById(id);
 
         if  (post) {
             await this.postRepository.deleteById(id)
@@ -126,7 +125,6 @@ export class PostService {
         repost.authorId = repostAuthorId;
         repost.isRepost = true;
         repost.status = 'Published';
-        repost.likesCount = 0;
         repost.id = null;
         repost.publishedAt = undefined;
         repost.originalPostId = postId;
@@ -142,4 +140,19 @@ export class PostService {
         return repost ? true : false;
     }
 
+    public async getUserPostCount(authorId: string): Promise<number> {
+        return await this.postRepository.countPosts(authorId);
+    }
+
+    public async likePost({userId, postId}: LikeDto): Promise<PostEntity> {
+        const existLike = await this.postRepository.findUserLike(userId, postId);
+
+        if (existLike) {
+            await this.postRepository.dislikePost(existLike.id);
+        } else {
+            await this.postRepository.likePost(userId, postId);
+        }
+
+        return await this.findPost(postId);
+    }
 }
