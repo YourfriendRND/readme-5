@@ -20,16 +20,21 @@
     # "firstName": "Антон",
     # "lastName": "Иванов"
 
+    # "email": "tisha23@inbox.ru",
+    # "password": "62343@3uudse",
+    # "firstName": "Тихомир",
+    # "lastName": "Строганов"
+
 ### Регистрация нового пользователя
 
 POST http://localhost:3010/api/users/register HTTP/1.1
 content-type: application/json
 
 {
-    "email": "anton@mail.ru",
-    "password": "oefknf!Er21",
-    "firstName": "Антон",
-    "lastName": "Иванов"
+    "email": "tisha23@inbox.ru",
+    "password": "62343@3uudse",
+    "firstName": "Тихомир",
+    "lastName": "Строганов"
 }
 
 #### Авторизация пользователя
@@ -46,13 +51,13 @@ content-type: application/json
 
 GET http://localhost:3010/api/users/668aaffd1af89a2aa9a6c084 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDM2NTMyMSwiZXhwIjoxNzIwNDA4NTIxfQ.EcmHbxtlmZI5qe15bIpA45TJQkz72fnEJpTPr2sghoM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDUwMDg3MywiZXhwIjoxNzIwNTQ0MDczfQ.Vw6es49PfZq5vzl1_KhUmh4VDu7vhC92x9pBmnQTqDo
 
 ##### Запрос на обновление пары токенов
 
 POST http://localhost:3010/api/users/refresh HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsInRva2VuSWQiOiI3MDNhMzQ0OS0xYTI5LTQwMWYtOWY5Yi1jYjhhOTE3ZTkxNjEiLCJpYXQiOjE3MjAzNjUzMjEsImV4cCI6MTcyMDc5NzMyMX0.vwUHJG80rbKQ57FaRUDxhjWUP-TGH0Wf34bi8IGgeWA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsInRva2VuSWQiOiJiOWY5YTI5ZS1jMzJmLTQ5MjYtYTMxZS1hZmFmOTM5Nzc0ZDkiLCJpYXQiOjE3MjA4NTcxMDMsImV4cCI6MTcyMTI4OTEwM30.mFNELQLhvcfg7Odomfdcxdbs6kBFtzcQBSJo2FX0ros
 
 ##### Смена пароля пользователя
 PATCH http://localhost:3010/api/users/password/change HTTP/1.1
@@ -66,9 +71,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxM
 
 ##### Подписка на пользователя
 
-POST http://localhost:3010/api/users/follow/668ab0d23bfdcfaca34434ca HTTP/1.1
+POST http://localhost:3010/api/users/follow/668aaffd1af89a2aa9a6c084 HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDM2NTMyMSwiZXhwIjoxNzIwNDA4NTIxfQ.EcmHbxtlmZI5qe15bIpA45TJQkz72fnEJpTPr2sghoM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDUwMDg3MywiZXhwIjoxNzIwNTQ0MDczfQ.Vw6es49PfZq5vzl1_KhUmh4VDu7vhC92x9pBmnQTqDo
+
 
 ##### Отписка от пользователей
 POST http://localhost:3010/api/users/unfollow/668aaffd1af89a2aa9a6c084 HTTP/1.1

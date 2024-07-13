@@ -20,3 +20,4 @@ export * from './lib/jwt.interface';
 export * from './lib/refresh-token-payload.interface';
 export * from './lib/date-time.type';
 export * from './lib/follower.interface';
+export * from './lib/like.interface';

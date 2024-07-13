@@ -7,7 +7,7 @@ export interface PostInterface {
   tags: TagInterface[];
   authorId?: string;
   status: string;
-  likesCount: number;
+  likes?: number;
   type: string;
   announcement?: string;
   text?: string;
@@ -20,5 +20,5 @@ export interface PostInterface {
   isRepost?: boolean;
   originalAuthorId?: string;
   originalPostId?: string;
-  comments?: CommentInterface[]
+  comments?: CommentInterface[];
 }

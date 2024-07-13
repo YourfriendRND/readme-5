@@ -136,4 +136,11 @@ export class PostRDO {
   })
   @Expose()
   public originalAuthorId!: string;
+
+  @ApiProperty({
+    description: 'The quantity of users likes to post',
+    example: 4
+  })
+  @Expose()
+  public likes!: number;
 }

@@ -1,7 +1,6 @@
-import { Controller, Post, Param, Body, Req, HttpStatus, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpCode } from '@nestjs/common';
 import { FollowerService } from './follower.service';
 import { FollowerDTO } from '@project/shared/dto';
-import { UserEntity } from '../user/user.entity';
 import { fillDTO } from '@project/shared/helpers';
 import { FollowerRDO } from '@project/shared/rdo';
 
@@ -19,6 +18,7 @@ export class FollowerController {
        const follower = await this.followerService.followUser(followerDto);
        return fillDTO(FollowerRDO, follower.toPOJO());
     }
+
     @HttpCode(HttpStatus.NO_CONTENT)
     @Post('unfollow/:userId')
     public async unfollow(

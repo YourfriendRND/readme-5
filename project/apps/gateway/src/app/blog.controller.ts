@@ -39,8 +39,8 @@ export class BlogController {
         @Query('sort') sort?: string,
         @Query('limit') limit?: number,
         @Query('page') page?: number
-    ) {
-        const  { data } = await this.httpService.axiosRef.get(
+    ): Promise<PostRDO[]> {
+        const  { data } = await this.httpService.axiosRef.get<PostRDO[]>(
             `${ApplicationServicesURL.Blog}`,
             {
                 params: {
@@ -61,7 +61,7 @@ export class BlogController {
     public async createPost(
         @Body() dto: PostDTO
     ): Promise<PostRDO> {
-        const { data } = await this.httpService.axiosRef.post(`${ApplicationServicesURL.Blog}`, dto);
+        const { data } = await this.httpService.axiosRef.post<PostRDO>(`${ApplicationServicesURL.Blog}`, dto);
         return data;
     }
 
@@ -70,7 +70,7 @@ export class BlogController {
     public async createRepost(
         @Req() request: Request,
         @Param('postId') postId: string
-    ) {
+    ): Promise<PostRDO> {
 
         if (!postId) {
             throw new BadRequestException(`post id does not defined for repost`);
@@ -78,7 +78,7 @@ export class BlogController {
 
         const authorId = request['user']?.id;
 
-        const { data } = await this.httpService.axiosRef.post(`${ApplicationServicesURL.Blog}/${postId}/repost/${authorId}`, null);
+        const { data } = await this.httpService.axiosRef.post<PostRDO>(`${ApplicationServicesURL.Blog}/${postId}/repost/${authorId}`, null);
 
         return data;
     }
@@ -91,9 +91,9 @@ export class BlogController {
     public async updatePost(
         @Param('id') id: string,
         @Body() dto: PostDTO
-    ) {
+    ): Promise<PostRDO> {
 
-        const { data } = await this.httpService.axiosRef.patch(`${ApplicationServicesURL.Blog}/${id}`, dto);
+        const { data } = await this.httpService.axiosRef.patch<PostRDO>(`${ApplicationServicesURL.Blog}/${id}`, dto);
 
         return data;
     }
@@ -105,9 +105,21 @@ export class BlogController {
     @HttpCode(HttpStatus.NO_CONTENT)
     public async deletePost(
         @Param('id') id: string,
-    ) {
-        const { data } = await this.httpService.axiosRef.delete(`${ApplicationServicesURL.Blog}/${id}`);
+    ): Promise<void> {
+        await this.httpService.axiosRef.delete(`${ApplicationServicesURL.Blog}/${id}`);
+    }
 
-        return data;
+    @Post('/like/:id')
+    @UseGuards(CheckAuthGuard)
+    public async likePost(
+        @Req() request: Request,
+        @Param('id') postId: string
+    ): Promise<PostRDO> {
+        const userId = request['user']?.id;
+        const dto = {postId, userId};
+
+        const { data: post } = await this.httpService.axiosRef.post<PostRDO>(`${ApplicationServicesURL.Blog}/like`, dto);
+
+        return post;
     }
 }

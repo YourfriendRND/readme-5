@@ -1,13 +1,13 @@
 POST http://localhost:3010/api/blog HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTg4NzA4MTIsImV4cCI6MTcxODkxNDAxMn0.6DDPLJmlYKEziSnK24OJwp9n52LpPELyJH-cs5PRPSk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFhZmZkMWFmODlhMmFhOWE2YzA4NCIsImVtYWlsIjoiYWxiYXRyb3pAbWFpbC5uZXQiLCJsYXN0TmFtZSI6ItCY0L3RgtC10YDQvdC10YjQvdC7IiwiZmlyc3ROYW1lIjoi0JjQstCw0L3Rg9GI0LrQsCIsImlhdCI6MTcyMDUwMTExOCwiZXhwIjoxNzIwNTQ0MzE4fQ.nSc7bFkq13u6HtI0ErMmClUfNYvX-lxv7kESbSI4h5g
 
 {
-    "name": "Кукушкин пост о жизни в мегаполисе №1",
+    "name": "Иванушка не дурачок он интернешнл, епта",
     "status": "published",
     "type": "text",
-    "text": "Сегодня, я решила вести свой блог о том как интересно жить в большом городе. Будет ли это легко? Не знаю? проверим и скоро вы узнаете подробности.",
-    "announcement": "Кукушка о жизни. Начало. Пост №1. Введение. О себе"
+    "text": "я конечно не рыжий, но спеть про тополиный пух, жару и июль могу. Очень нынче жарко, и пух уже давно улетел. Пока!",
+    "announcement": "Иванушка интернешнл и его тополиный пух, жара, июль"
 }
 
 #### Получение списка публикаций без параметров
@@ -37,11 +37,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxM
 
 #### Удаление поста
 
-DELETE http://localhost:3010/api/blog/09a29b15-48dd-4416-bc3b-b481083d37ef HTTP/1.1
+DELETE http://localhost:3010/api/blog/c2e27969-75b2-4a7b-9e0c-9654c17f1f9c HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTk0NjUwMzEsImV4cCI6MTcxOTUwODIzMX0.9RJ_l0jX9drwdOb0RUN6AlAj3xvPwWhfoGnVBkmHaPQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFhZmZkMWFmODlhMmFhOWE2YzA4NCIsImVtYWlsIjoiYWxiYXRyb3pAbWFpbC5uZXQiLCJsYXN0TmFtZSI6ItCY0L3RgtC10YDQvdC10YjQvdC7IiwiZmlyc3ROYW1lIjoi0JjQstCw0L3Rg9GI0LrQsCIsImlhdCI6MTcyMDUwMTExOCwiZXhwIjoxNzIwNTQ0MzE4fQ.nSc7bFkq13u6HtI0ErMmClUfNYvX-lxv7kESbSI4h5g
 
 #### Репост
 POST http://localhost:3010/api/blog/repost/a41ae78f-743d-442d-84c3-bbad744b111d HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NWVhMjMxMmYzZjZmNTVmMzg4MjQ2YiIsImVtYWlsIjoia3VrdWhhQG1haWwuY29tIiwibGFzdE5hbWUiOiLQmtGD0LrRg9GI0LrQuNC90LAiLCJmaXJzdE5hbWUiOiLQotC-0LzQsNGA0LAiLCJpYXQiOjE3MTk0NjUwMzEsImV4cCI6MTcxOTUwODIzMX0.9RJ_l0jX9drwdOb0RUN6AlAj3xvPwWhfoGnVBkmHaPQ
+
+#### Лайк - Дизлайк пост
+POST http://localhost:3010/api/blog/like/84bf6858-c28f-42e8-a3a6-259850d4bfbb HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OGFiMGQyM2JmZGNmYWNhMzQ0MzRjYSIsImVtYWlsIjoiYW50b25AbWFpbC5ydSIsImxhc3ROYW1lIjoi0JjQstCw0L3QvtCyIiwiZmlyc3ROYW1lIjoi0JDQvdGC0L7QvSIsImlhdCI6MTcyMDg1NzEwMywiZXhwIjoxNzIwOTAwMzAzfQ.uS9bIHsNjjzo06Z9Mqf0BGZnqGLu0q0qdc-437rqJmc
+
